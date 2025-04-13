@@ -5,6 +5,7 @@ import TodoFilter from "./components/TodoFilter.vue";
 import TodoList from "./components/TodoList.vue";
 
 type Todo = {
+    id: string;
     message: string;
     completed: boolean;
 };
@@ -32,6 +33,7 @@ async function fetchTodos() {
 
 function onAddTodo(message: string) {
     const todo = {
+        id: crypto.randomUUID(),
         message,
         completed: false,
     };
@@ -45,12 +47,14 @@ function onFilterTodos(filter: string) {
     activeFilter.value = filter;
 }
 
-function onRemoveTodo(index: number) {
-    todos.value = todos.value.filter((_, i) => i !== index);
+function onRemoveTodo(id: string) {
+    todos.value = todos.value.filter((todo) => todo.id !== id);
 }
 
-function onTodoStatus(index: number) {
-    todos.value[index].completed = !todos.value[index].completed;
+function onTodoStatus(id: string) {
+    todos.value = todos.value.map((todo) => 
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
 }
 
 onMounted(fetchTodos);

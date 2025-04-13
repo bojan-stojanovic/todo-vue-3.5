@@ -2,25 +2,25 @@
 import TodoCard from "./TodoCard.vue";
 
 defineProps<{
-    filteredTodos: { message: string; completed: boolean }[];
+    filteredTodos: { id: string, message: string; completed: boolean }[];
 }>();
 
 const emit = defineEmits<{
-    removeTodo: [index: number];
-    todoStatus: [index: number];
+    removeTodo: [id: string];
+    todoStatus: [id: string];
 }>();
 </script>
 
 <template>
     <div class="todo-list">
         <TodoCard
-            v-for="(todo, index) in filteredTodos"
+            v-for="todo in filteredTodos"
             :message="todo.message"
             :completed="todo.completed"
-            :index
-            :key="index"
-            @remove-todo="emit('removeTodo', index)"
-            @todo-status="emit('todoStatus', index)"
+            :id="todo.id"
+            :key="todo.id"
+            @remove-todo="emit('removeTodo', todo.id)"
+            @todo-status="emit('todoStatus', todo.id)"
         />
     </div>
 </template>

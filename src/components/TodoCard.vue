@@ -2,12 +2,12 @@
 defineProps<{
     message: string;
     completed: boolean;
-    index: number;
+    id: string;
 }>();
 
 const emit = defineEmits<{
-    removeTodo: [index: number];
-    todoStatus: [index: number];
+    removeTodo: [id: string];
+    todoStatus: [id: string];
 }>();
 </script>
 
@@ -15,10 +15,10 @@ const emit = defineEmits<{
     <div class="todo-card" :class="{ completed: completed }">
         <p>{{ message }}</p>
         <div class="todo-card__controls">
-            <button class="toggle" @click="emit('todoStatus', index)">
+            <button class="toggle" @click="emit('todoStatus', id)">
                 Mark as done
             </button>
-            <button class="remove" @click="emit('removeTodo', index)">
+            <button class="remove" @click="emit('removeTodo', id)">
                 Remove
             </button>
         </div>
